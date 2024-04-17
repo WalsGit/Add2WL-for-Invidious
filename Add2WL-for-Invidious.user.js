@@ -6,8 +6,8 @@
 // @author         Wa!id
 // @match          https://yt.artemislena.eu/*
 // @match          https://yewtu.be/*
-// @downloadURL     https://github.com/WalsGit/Add2WL-for-Invidious/raw/main/Add2WL-for-Invidious.user.js
-// @updateURL       https://github.com/WalsGit/Add2WL-for-Invidious/raw/main/Add2WL-for-Invidious.user.js
+// @downloadURL    https://github.com/WalsGit/Add2WL-for-Invidious/raw/main/Add2WL-for-Invidious.user.js
+// @updateURL      https://github.com/WalsGit/Add2WL-for-Invidious/raw/main/Add2WL-for-Invidious.user.js
 // @supportURL     https://github.com/WalsGit/Add2WL-for-Invidious/issues
 // ==/UserScript==
 
