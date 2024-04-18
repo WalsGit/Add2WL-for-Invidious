@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Add to Watch Later for Invidious
 // @namespace      https://github.com/WalsGit
-// @version        Alpha-v1
+// @version        Alpha-v2
 // @description    Adds an "Add to Watch Later" button on video thumbnails for Invidious
 // @author         Wa!id
 // @match          https://yt.artemislena.eu/*
@@ -75,36 +75,12 @@
 
     // Icons
     const WLicon = `<svg fill="#fff" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/></svg>`;
-    const savedIcon = `<svg fill="#fff" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z"/></svg>`;
+    const savedIcon = `<svg fill="#0f0" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>`;
 
     // Functions
     function checkIfLoggedIn() {
         const userName = document.getElementById("user_name");
         return !!userName;
-    }
-
-    async function getValue(videoURL) {
-        const response = await fetch(videoURL);
-        if (!response.ok) {
-            throw new Error("Failed to fetch page: " + videoURL);
-        }
-        const htmlContent = await response.text();
-
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlContent, "text/html");
-
-        const form = doc.querySelector('form[action="/playlist_ajax"]');
-        if (!form) {
-            throw new Error('No form found with action "/playlist_ajax" on page: ' + videoURL);
-        }
-
-        const csrfTokenInput = form.querySelector('input[name="csrf_token"]');
-        if (!csrfTokenInput) {
-            throw new Error("No csrf_token input found in form");
-        }
-        const csrfTokenValue = csrfTokenInput.value;
-
-        return csrfTokenValue;
     }
 
     function addSetDefaultPLButton(thumbnail) {
@@ -138,105 +114,101 @@
         thumbnail.appendChild(button);
     }
 
-    function addToWLButton(thumbnail) {
+    function addToWLButton(thumbnail, addedVideos) {
         const videoURL = thumbnail.querySelector("a").href;
         const videoID = videoURL.match(/v=(.+)$/)[1];
 
-        const form = document.createElement("form");
-        form.setAttribute("data-onsubmit", "return false");
-        form.setAttribute("action", "/playlist_ajax");
-        form.setAttribute("method", "post");
-        form.setAttribute("target", "_blank");
+        const buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("top-right-overlay");
 
-        const playlistIDInput = document.createElement("input");
-        playlistIDInput.setAttribute("type", "hidden");
-        playlistIDInput.setAttribute("name", "playlist_id");
-        playlistIDInput.setAttribute("value", WLPLID);
-        form.appendChild(playlistIDInput);
+        const WLButton = document.createElement("button");
+        WLButton.classList.add("WLButton", "icon");
 
-        const videoIDInput = document.createElement("input");
-        videoIDInput.setAttribute("type", "hidden");
-        videoIDInput.setAttribute("name", "video_id");
-        videoIDInput.setAttribute("value", videoID);
-        form.appendChild(videoIDInput);
+        let isAdded = videoID in addedVideos;
+        WLButton.setAttribute("data-added", isAdded ? "1" : "0");
 
-        const csrfTokenInput = document.createElement("input");
-        csrfTokenInput.setAttribute("type", "hidden");
-        csrfTokenInput.setAttribute("name", "csrf_token");
-        csrfTokenInput.setAttribute("value", "");
-        form.appendChild(csrfTokenInput);
-
-        const submitButton = document.createElement("button");
-        submitButton.setAttribute("data-onclick", "add_playlist_video");
-        submitButton.setAttribute("data-id", videoID);
-        submitButton.setAttribute("type", "submit");
-        submitButton.classList.add("WLButton", "icon");
-        submitButton.setAttribute("title", `Add to ${WLPLTitle}`);
-        submitButton.innerHTML = WLicon;
-        form.appendChild(submitButton);
-
-        const formContainer = document.createElement("div");
-        formContainer.classList.add("top-right-overlay");
-        formContainer.appendChild(form);
-
-        const playlistDataScript = document.createElement("script");
-        playlistDataScript.setAttribute("id", "playlist_data_" + videoID);
-        playlistDataScript.setAttribute("type", "application/json");
-        formContainer.appendChild(playlistDataScript);
-
-        const playlistWidjetScript = document.createElement("script");
-        /*
-        const timestamp = new Date().getTime();
-        playlistWidjetScript.setAttribute('src', '/js/playlist_widget.js?v='+timestamp);
-        */
-        const playlistWidjet = `'use strict';
-                var playlist_data = JSON.parse(document.getElementById('playlist_data_${videoID}').textContent);
-                var payload = 'csrf_token=' + playlist_data.csrf_token;
-
-                function add_playlist_video(target) {
-                    var select = target.parentNode.children[0].children[1];
-                    var option = select.children[select.selectedIndex];
-
-                    var url = '/playlist_ajax?action_add_video=1&redirect=false' +
-                        '&video_id=' + target.getAttribute('data-id') +
-                        '&playlist_id=' + option.getAttribute('data-plid');
-
-                    helpers.xhr('POST', url, {payload: payload}, {
-                        on200: function (response) {
-                            option.textContent = '✓' + option.textContent;
-                        }
-                    });
-                }
-        `;
-        playlistWidjetScript.innerHTML = playlistWidjet;
-        formContainer.appendChild(playlistWidjetScript);
-
-        thumbnail.appendChild(formContainer);
-
-        submitButton.addEventListener("click", async () => {
-            try {
-                const encodedToken = await getValue(videoURL);
-                const csrfToken = decodeURIComponent(encodedToken);
-
-                csrfTokenInput.setAttribute("value", csrfToken);
-                playlistDataScript.innerHTML = `{"csrf_token": "${csrfToken}"}`;
-
-                submitButton.disabled = true;
-                form.submit();
-            } catch (error) {
-                console.error("Error retrieving CSRF token:", error);
-            } finally {
-                submitButton.disabled = false;
-            }
-            });
+        if (isAdded) {
+            WLButton.setAttribute("title", `remove from ${WLPLTitle}`);
+            WLButton.innerHTML = savedIcon;
+        } else {
+            WLButton.setAttribute("title", `Add to ${WLPLTitle}`);
+            WLButton.innerHTML = WLicon;
         }
+
+        buttonContainer.appendChild(WLButton);
+
+        WLButton.addEventListener("click", async () => {
+            try {
+                const apiUrl = WLButton.dataset.added === "1"
+                ? `${IVinstance}/api/v1/auth/playlists/${WLPLID}/videos/${addedVideos[videoID].indexId}`
+                : `${IVinstance}/api/v1/auth/playlists/${WLPLID}/videos`;
+
+                const method = WLButton.dataset.added === "1" ? "DELETE" : "POST";
+                const body = method === "POST" ? JSON.stringify({ videoId: videoID }) : null;
+
+                const response = await fetch(apiUrl, {
+                    method,
+                    headers: method === "POST" ? { "Content-Type": "application/json" } : {},
+                    body,
+                });
+
+                if (!response.ok) {
+                    throw new Error(`${method === "POST" ? "Failed to add video" : "Failed to remove video"}: ${response.statusText}`);
+                }
+
+                if (response.status === (method === "POST" ? 201 : 204)) {
+                    // Update button state and data-added attribute
+                    isAdded = !isAdded;
+                    WLButton.dataset.added = isAdded ? "1" : "0";
+                    WLButton.setAttribute("title", isAdded ? `remove from ${WLPLTitle}` : `Add to ${WLPLTitle}`);
+                    WLButton.innerHTML = isAdded ? savedIcon : WLicon;
+                    addedVideos = await getPLVideos(WLPLID);
+                }
+            } catch (error) {
+                console.error("Error adding/removing video to playlist:", error);
+                // Handle errors (optional: visual cue or notification)
+            }
+        });
+
+            thumbnail.appendChild(buttonContainer);
+        }
+
+    async function getPLVideos(WLPLID) {
+        try {
+            const response = await fetch(`${IVinstance}/api/v1/auth/playlists/${WLPLID}`);
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch playlist: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+
+            if (!data.videos) {
+                return {};
+            }
+
+            const videoData = {};
+            for (const video of data.videos) {
+                const videoId = video.videoId;
+                const indexId = video.indexId;
+
+                if (videoId) {
+                    videoData[videoId] = { indexId };
+                }
+            }
+
+            return videoData;
+        } catch (error) {
+            console.error("Error fetching playlist video IDs:", error);
+            return {};
+        }
+    }
 
     function addAlertMessage(currentPageURL) {
         const navbar = document.querySelector(".pure-g.navbar.h-box");
         const alertMessage = document.createElement("div");
         alertMessage.classList.add("h-box");
         let message = null;
-        console.log("Valeur de WLPLID :", WLPLID);
         if (typeof WLPLID === null) {
         if (currentPageURL == playlistsPageURL) {
             message = alertWLmissingTxtOnPLPage;
@@ -262,7 +234,17 @@
         if (currentPageURL == playlistsPageURL) {
             thumbnails.forEach(addSetDefaultPLButton);
         } else {
-            thumbnails.forEach(addToWLButton);
+            let addedVideos //= getPLVideos(WLPLID);
+            getPLVideos(WLPLID)
+                .then(videos => {
+                addedVideos = videos;
+                thumbnails.forEach(thumbnail => addToWLButton(thumbnail, addedVideos));
+            })
+                .catch(error => {
+                console.error("Error fetching playlist videos:", error);
+            });
+
+            //thumbnails.forEach(thumbnail => addToWLButton(thumbnail, addedVideos));
         }
         }
     }
