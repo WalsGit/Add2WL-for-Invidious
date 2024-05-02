@@ -1,11 +1,35 @@
 // ==UserScript==
 // @name           Add to Watch Later for Invidious
 // @namespace      https://github.com/WalsGit
-// @version        Alpha-v2
+// @version        1.0
 // @description    Adds an "Add to Watch Later" button on video thumbnails for Invidious
 // @author         Wa!id
 // @match          https://yt.artemislena.eu/*
 // @match          https://yewtu.be/*
+// @match          https://invidious.fdn.fr/*
+// @match          https://vid.puffyan.us/*
+// @match          https://invidious.nerdvpn.de/*
+// @match          https://invidious.pr...segfau.lt/*
+// @match          https://invidious.lunar.icu/*
+// @match          https://inv.tux.pizza/*
+// @match          https://invidious.flokinet.to/*
+// @match          https://iv.ggtyler.dev/*
+// @match          https://inv.nadeko.net/*
+// @match          https://iv.nboeck.de/*
+// @match          https://invidious.protokolla.fi/*
+// @match          https://invidious.private.coffee/*
+// @match          https://inv.us.projectsegfau.lt/*
+// @match          https://invidious.perennialte.ch/*
+// @match          https://invidious.jing.rocks/*
+// @match          https://invidious.drgns.space/*
+// @match          https://invidious.ei...zocken.eu/*
+// @match          https://inv.oikei.net/*
+// @match          https://vid.lilay.dev/*
+// @match          https://iv.datura.network/*
+// @match          https://yt.drgnz.club/*
+// @match          https://yt.cdaut.de/*
+// @match          https://invidious.privacydev.net/*
+// @match          https://iv.melmac.space/*
 // @downloadURL    https://github.com/WalsGit/Add2WL-for-Invidious/raw/main/Add2WL-for-Invidious.user.js
 // @updateURL      https://github.com/WalsGit/Add2WL-for-Invidious/raw/main/Add2WL-for-Invidious.user.js
 // @supportURL     https://github.com/WalsGit/Add2WL-for-Invidious/issues
@@ -54,20 +78,17 @@
 
     // Default values
     let WLPLID = localStorage.getItem("WLPLID");
-    console.log("WLPLID:", WLPLID);
     let WLPLTitle = localStorage.getItem("WLPLTitle");
-    console.log("WLPLTitle:", WLPLTitle);
+    let ChangeDefaultWLPLID = false;
 
     const IVinstance = "https://" + window.location.hostname;
-    console.log("My instance", IVinstance);
     const currentPageURL = window.location.href;
-    console.log("My current URL", currentPageURL);
     const playlistsPageURL = IVinstance + "/feed/playlists";
 
     const alertWLmissingTxt =
         '⚠️ No default Watch Later playlist defined: please go to your <a href="' +
         playlistsPageURL +
-        '">playlist page</a> and select one (or create one if necessary).';
+        '">playlists page</a> and select one (or create one if necessary).';
     const alertWLmissingTxtOnPLPage =
         '⚠️ No default Watch Later playlist defined: please select (or create) your default "Watch Later" playlist. To do so, hover over your prefered playlist and click on the clock icon that will appear on the top right corner of the thumbnail.';
     const defaultWLMessage =
@@ -157,7 +178,6 @@
                 }
 
                 if (response.status === (method === "POST" ? 201 : 204)) {
-                    // Update button state and data-added attribute
                     isAdded = !isAdded;
                     WLButton.dataset.added = isAdded ? "1" : "0";
                     WLButton.setAttribute("title", isAdded ? `remove from ${WLPLTitle}` : `Add to ${WLPLTitle}`);
@@ -166,7 +186,6 @@
                 }
             } catch (error) {
                 console.error("Error adding/removing video to playlist:", error);
-                // Handle errors (optional: visual cue or notification)
             }
         });
 
@@ -204,19 +223,40 @@
         }
     }
 
+    async function checkPLExists(WLPLID) {
+        try {
+            const response = await fetch(`${IVinstance}/api/v1/auth/playlists/${WLPLID}`);
+
+            if (!response.ok) {
+                const json = await response.json();
+                if (json.error === "Playlist does not exist.") {
+                    return false;
+                } else {
+                    console.error("Error checking playlist's existence:", json.error);
+                    return false;
+                }
+            }
+            return true;
+        } catch (error) {
+            console.error("Error checking playlist's existence:", error);
+            return false;
+        }
+    }
+
     function addAlertMessage(currentPageURL) {
         const navbar = document.querySelector(".pure-g.navbar.h-box");
         const alertMessage = document.createElement("div");
         alertMessage.classList.add("h-box");
         let message = null;
-        if (typeof WLPLID === null) {
-        if (currentPageURL == playlistsPageURL) {
-            message = alertWLmissingTxtOnPLPage;
-        } else {
-            message = alertWLmissingTxt;
-        }
+
+        if (typeof WLPLID === null || ChangeDefaultWLPLID === true) {
+            if (currentPageURL == playlistsPageURL) {
+                message = alertWLmissingTxtOnPLPage;
+            } else {
+                message = alertWLmissingTxt;
+            }
         } else if (currentPageURL == playlistsPageURL) {
-        message = defaultWLMessage;
+            message = defaultWLMessage;
         }
         if (message !== null) {
         alertMessage.innerHTML = "<h3>" + message + "</h3>";
@@ -229,23 +269,32 @@
     const thumbnails = document.querySelectorAll("div.thumbnail");
 
     if (isLoggedIn) {
-        if (currentPageURL != IVinstance) {
-        addAlertMessage(currentPageURL);
-        if (currentPageURL == playlistsPageURL) {
-            thumbnails.forEach(addSetDefaultPLButton);
-        } else {
-            let addedVideos //= getPLVideos(WLPLID);
-            getPLVideos(WLPLID)
-                .then(videos => {
-                addedVideos = videos;
-                thumbnails.forEach(thumbnail => addToWLButton(thumbnail, addedVideos));
-            })
-                .catch(error => {
-                console.error("Error fetching playlist videos:", error);
-            });
-
-            //thumbnails.forEach(thumbnail => addToWLButton(thumbnail, addedVideos));
-        }
-        }
+        checkPLExists(WLPLID)
+          .then((exists) => {
+            ChangeDefaultWLPLID = !exists;
+            if (currentPageURL != IVinstance) {
+              addAlertMessage(currentPageURL);
+              if (currentPageURL == playlistsPageURL) {
+                thumbnails.forEach(addSetDefaultPLButton);
+              } else {
+                if (!ChangeDefaultWLPLID) {
+                  let addedVideos;
+                  getPLVideos(WLPLID)
+                    .then((videos) => {
+                      addedVideos = videos;
+                      thumbnails.forEach((thumbnail) =>
+                        addToWLButton(thumbnail, addedVideos)
+                      );
+                    })
+                    .catch((error) => {
+                      console.error("Error fetching playlist videos:", error);
+                    });
+                }
+              }
+            }
+          })
+          .catch((error) => {
+            console.error("Error checking playlist existence:", error);
+          });
     }
 })();
