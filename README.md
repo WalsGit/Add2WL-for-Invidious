@@ -1,5 +1,5 @@
 # Add to Watch Later for Invidious
-A userscript to add an "add to watch later" button on video thumbnails in Invidious
+A Tampermonkey userscript to add an "add to watch later" button on video thumbnails in Invidious
 
 <p align="center"><img src="https://raw.githubusercontent.com/WalsGit/Add2WL-for-Invidious/main/a2wl.gif" alt="animated gif show how the script works when you hover over a thumbnail" /></p>
 
@@ -37,7 +37,7 @@ https://iv.melmac.space <br>
 </details>
 
 ## How to install
-WIP
+In Tampermonkey, go to the **Utilities** tab and paste this URL https://github.com/WalsGit/Add2WL-for-Invidious/raw/main/Add2WL-for-Invidious.user.js in the **Import from URL** field and click on install.
 
 ## How it works
  1. Go and login to your Invidious instance
