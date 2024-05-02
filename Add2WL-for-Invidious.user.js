@@ -9,7 +9,7 @@
 // @match          https://invidious.fdn.fr/*
 // @match          https://vid.puffyan.us/*
 // @match          https://invidious.nerdvpn.de/*
-// @match          https://invidious.pr...segfau.lt/*
+// @match          https://invidious.projectsegfau.lt/*
 // @match          https://invidious.lunar.icu/*
 // @match          https://inv.tux.pizza/*
 // @match          https://invidious.flokinet.to/*
@@ -22,7 +22,7 @@
 // @match          https://invidious.perennialte.ch/*
 // @match          https://invidious.jing.rocks/*
 // @match          https://invidious.drgns.space/*
-// @match          https://invidious.ei...zocken.eu/*
+// @match          https://invidious.einfachzocken.eu/*
 // @match          https://inv.oikei.net/*
 // @match          https://vid.lilay.dev/*
 // @match          https://iv.datura.network/*
