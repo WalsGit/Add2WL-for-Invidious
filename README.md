@@ -8,7 +8,7 @@ The script matchs all https type instances listed in https://api.invidious.io on
 
 <details>
 <summary>Instances list</summary>
-* https://yt.artemislena.eu 
+https://yt.artemislena.eu <br>
 * https://yewtu.be 
 * https://invidious.fdn.fr 
 * https://vid.puffyan.us 
