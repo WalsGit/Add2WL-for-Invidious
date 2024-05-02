@@ -9,31 +9,31 @@ The script matchs all https type instances listed in https://api.invidious.io on
 <details>
 <summary>Instances list</summary>
 https://yt.artemislena.eu <br>
-* https://yewtu.be 
-* https://invidious.fdn.fr 
-* https://vid.puffyan.us 
-* https://invidious.nerdvpn.de 
-* https://invidious.projectsegfau.lt/ 
-* https://invidious.lunar.icu 
-* https://inv.tux.pizza 
-* https://invidious.flokinet.to 
-* https://iv.ggtyler.dev 
-* https://inv.nadeko.net 
-* https://iv.nboeck.de 
-* https://invidious.protokolla.fi 
-* https://invidious.private.coffee 
-* https://inv.us.projectsegfau.lt 
-* https://invidious.perennialte.ch 
-* https://invidious.jing.rocks 
-* https://invidious.drgns.space 
-* https://invidious.einfachzocken.eu 
-* https://inv.oikei.net 
-* https://vid.lilay.dev 
-* https://iv.datura.network 
-* https://yt.drgnz.club 
-* https://yt.cdaut.de 
-* https://invidious.privacydev.net 
-* https://iv.melmac.space 
+https://yewtu.be <br>
+https://invidious.fdn.fr <br>
+https://vid.puffyan.us <br>
+https://invidious.nerdvpn.de <br>
+https://invidious.projectsegfau.lt/ <br>
+https://invidious.lunar.icu <br>
+https://inv.tux.pizza <br>
+https://invidious.flokinet.to <br>
+https://iv.ggtyler.dev <br>
+https://inv.nadeko.net <br>
+https://iv.nboeck.de <br>
+https://invidious.protokolla.fi <br>
+https://invidious.private.coffee <br>
+https://inv.us.projectsegfau.lt <br>
+https://invidious.perennialte.ch <br>
+https://invidious.jing.rocks <br>
+https://invidious.drgns.space <br>
+https://invidious.einfachzocken.eu <br>
+https://inv.oikei.net <br>
+https://vid.lilay.dev <br>
+https://iv.datura.network <br>
+https://yt.drgnz.club <br>
+https://yt.cdaut.de <br>
+https://invidious.privacydev.net <br>
+https://iv.melmac.space <br>
 </details>
 
 ## How to install
