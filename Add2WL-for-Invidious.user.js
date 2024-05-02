@@ -4,7 +4,7 @@
 // @version        1.0
 // @description    Adds an "Add to Watch Later" button on video thumbnails for Invidious
 // @author         Wa!id
-// @licence        MIT
+// @license        MIT
 // @match          https://yt.artemislena.eu/*
 // @match          https://yewtu.be/*
 // @match          https://invidious.fdn.fr/*
