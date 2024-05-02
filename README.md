@@ -1,6 +1,6 @@
 # Add to Watch Later for Invidious
 A userscript to add an "add to watch later" button on video thumbnails in Invidious
-![](https://github.com/WalsGit/Add2WL-for-Invidious/a2wl.gif)
+![](https://raw.githubusercontent.com/WalsGit/Add2WL-for-Invidious/main/a2wl.gif)
 
 ## Matching Instances
 The script matchs all https type instances listed in https://api.invidious.io on May 5, 2024:
