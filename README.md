@@ -8,32 +8,32 @@ The script matchs all https type instances listed in https://api.invidious.io on
 
 <details>
 <summary>Instances list</summary>
-https://yt.artemislena.eu 
-https://yewtu.be 
-https://invidious.fdn.fr 
-https://vid.puffyan.us 
-https://invidious.nerdvpn.de 
-https://invidious.projectsegfau.lt/ 
-https://invidious.lunar.icu 
-https://inv.tux.pizza 
-https://invidious.flokinet.to 
-https://iv.ggtyler.dev 
-https://inv.nadeko.net 
-https://iv.nboeck.de 
-https://invidious.protokolla.fi 
-https://invidious.private.coffee 
-https://inv.us.projectsegfau.lt 
-https://invidious.perennialte.ch 
-https://invidious.jing.rocks 
-https://invidious.drgns.space 
-https://invidious.einfachzocken.eu 
-https://inv.oikei.net 
-https://vid.lilay.dev 
-https://iv.datura.network 
-https://yt.drgnz.club 
-https://yt.cdaut.de 
-https://invidious.privacydev.net 
-https://iv.melmac.space 
+* https://yt.artemislena.eu 
+* https://yewtu.be 
+* https://invidious.fdn.fr 
+* https://vid.puffyan.us 
+* https://invidious.nerdvpn.de 
+* https://invidious.projectsegfau.lt/ 
+* https://invidious.lunar.icu 
+* https://inv.tux.pizza 
+* https://invidious.flokinet.to 
+* https://iv.ggtyler.dev 
+* https://inv.nadeko.net 
+* https://iv.nboeck.de 
+* https://invidious.protokolla.fi 
+* https://invidious.private.coffee 
+* https://inv.us.projectsegfau.lt 
+* https://invidious.perennialte.ch 
+* https://invidious.jing.rocks 
+* https://invidious.drgns.space 
+* https://invidious.einfachzocken.eu 
+* https://inv.oikei.net 
+* https://vid.lilay.dev 
+* https://iv.datura.network 
+* https://yt.drgnz.club 
+* https://yt.cdaut.de 
+* https://invidious.privacydev.net 
+* https://iv.melmac.space 
 </details>
 
 ## How to install
