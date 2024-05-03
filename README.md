@@ -51,7 +51,7 @@ The script is also available on Greasyfork at https://greasyfork.org/en/scripts/
 
 ## How it works
  1. Go and login to your Invidious instance
- 2. Go to your Playlists Page and create a "Watch Later" playlist (you can name it whatever you want) [or skip this step if you would like to use an existing playlist] and return to your playslists page `IMPORTANT: your chosen playlist must have at least 1 video in it for the script to work because of an api bug. Until it's fixed, please make sure to add a video to the playlist the traditional way and make sure to always have at least one video for everything to work properly)`
+ 2. Go to your Playlists Page and create a "Watch Later" playlist (you can name it whatever you want) [or skip this step if you would like to use an existing playlist] and return to your playlists page `IMPORTANT: your chosen playlist must have at least 1 video in it for the script to work because of an api bug. Until it's fixed, please make sure to add a video to the playlist the traditional way and make sure to always have at least one video for everything to work properly)`
  3. Hover over the thumbnail of the playlist you want to set as your default "Watch Later" playlist and click on the top right corner button to set and save it.
  4. Now go to you subscriptions or trending page (or any other page with multiple video thumbnails) and hover over any thumbnail to reveal the "add to watch later" button and click on it to add that video to that playlist. If you see a green check icon when you hover over the thumbnail, that means the video is already in your watch later playlist and clicking on it will remove it from the list.
 
