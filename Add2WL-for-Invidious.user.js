@@ -1,36 +1,36 @@
 // ==UserScript==
 // @name           Add to Watch Later for Invidious
 // @namespace      https://github.com/WalsGit
-// @version        1.0
+// @version        1.1
 // @description    Adds an "Add to Watch Later" button on video thumbnails for Invidious
 // @author         Wa!id
 // @license        MIT
-// @match          https://yt.artemislena.eu/*
-// @match          https://yewtu.be/*
-// @match          https://invidious.fdn.fr/*
-// @match          https://vid.puffyan.us/*
-// @match          https://invidious.nerdvpn.de/*
-// @match          https://invidious.projectsegfau.lt/*
-// @match          https://invidious.lunar.icu/*
-// @match          https://inv.tux.pizza/*
-// @match          https://invidious.flokinet.to/*
-// @match          https://iv.ggtyler.dev/*
-// @match          https://inv.nadeko.net/*
-// @match          https://iv.nboeck.de/*
-// @match          https://invidious.protokolla.fi/*
-// @match          https://invidious.private.coffee/*
-// @match          https://inv.us.projectsegfau.lt/*
-// @match          https://invidious.perennialte.ch/*
-// @match          https://invidious.jing.rocks/*
-// @match          https://invidious.drgns.space/*
-// @match          https://invidious.einfachzocken.eu/*
-// @match          https://inv.oikei.net/*
-// @match          https://vid.lilay.dev/*
-// @match          https://iv.datura.network/*
-// @match          https://yt.drgnz.club/*
-// @match          https://yt.cdaut.de/*
-// @match          https://invidious.privacydev.net/*
-// @match          https://iv.melmac.space/*
+// @match          *://yt.artemislena.eu/*
+// @match          *://yewtu.be/*
+// @match          *://invidious.fdn.fr/*
+// @match          *://vid.puffyan.us/*
+// @match          *://invidious.nerdvpn.de/*
+// @match          *://invidious.projectsegfau.lt/*
+// @match          *://invidious.lunar.icu/*
+// @match          *://inv.tux.pizza/*
+// @match          *://invidious.flokinet.to/*
+// @match          *://iv.ggtyler.dev/*
+// @match          *://inv.nadeko.net/*
+// @match          *://iv.nboeck.de/*
+// @match          *://invidious.protokolla.fi/*
+// @match          *://invidious.private.coffee/*
+// @match          *://inv.us.projectsegfau.lt/*
+// @match          *://invidious.perennialte.ch/*
+// @match          *://invidious.jing.rocks/*
+// @match          *://invidious.drgns.space/*
+// @match          *://invidious.einfachzocken.eu/*
+// @match          *://inv.oikei.net/*
+// @match          *://vid.lilay.dev/*
+// @match          *://iv.datura.network/*
+// @match          *://yt.drgnz.club/*
+// @match          *://yt.cdaut.de/*
+// @match          *://invidious.privacydev.net/*
+// @match          *://iv.melmac.space/*
 // @downloadURL    https://github.com/WalsGit/Add2WL-for-Invidious/raw/main/Add2WL-for-Invidious.user.js
 // @updateURL      https://github.com/WalsGit/Add2WL-for-Invidious/raw/main/Add2WL-for-Invidious.user.js
 // @supportURL     https://github.com/WalsGit/Add2WL-for-Invidious/issues
@@ -82,7 +82,8 @@
     let WLPLTitle = localStorage.getItem("WLPLTitle");
     let ChangeDefaultWLPLID = false;
 
-    const IVinstance = "https://" + window.location.hostname;
+    const protocol = window.location.protocol;
+    const IVinstance = protocol + "//" + window.location.hostname;
     const currentPageURL = window.location.href;
     const playlistsPageURL = IVinstance + "/feed/playlists";
 
