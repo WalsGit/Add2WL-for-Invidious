@@ -47,7 +47,7 @@ Note that the script will also work with the `http` protocol as of version 1.1.
 ## How to install
 In Tampermonkey, go to the **Utilities** tab and paste this URL https://github.com/WalsGit/Add2WL-for-Invidious/raw/main/Add2WL-for-Invidious.user.js in the **Import from URL** field and click on install.
 
-The script is also available on Greasyfork at https://greasyfork.org/en/scripts/494002-add-to-watch-later-for-invidious 
+The script is also available on Greasyfork at https://greasyfork.org/en/scripts/494002-add-to-watch-later-for-invidious and on OpenUserJS at https://openuserjs.org/scripts/Walsgit/Add_to_Watch_Later_for_Invidious
 
 ## How it works
  1. Go and login to your Invidious instance
