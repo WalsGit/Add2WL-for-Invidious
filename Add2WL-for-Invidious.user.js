@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Add to Watch Later for Invidious
 // @namespace      https://github.com/WalsGit
-// @version        1.1.1
+// @version        1.2
 // @description    Adds an "Add to Watch Later" button on video thumbnails for Invidious
 // @author         Wa!id
 // @license        MIT
@@ -31,8 +31,8 @@
 // @match          *://yt.cdaut.de/*
 // @match          *://invidious.privacydev.net/*
 // @match          *://iv.melmac.space/*
-// @include        http://umbrel.local:3420/*
-// @include        https://umbrel.local:3420/*
+// @match          *://umbrel.local:3420/*
+// @match          *://umbrel:3420/*
 // @downloadURL    https://github.com/WalsGit/Add2WL-for-Invidious/raw/main/Add2WL-for-Invidious.user.js
 // @updateURL      https://github.com/WalsGit/Add2WL-for-Invidious/raw/main/Add2WL-for-Invidious.user.js
 // @supportURL     https://github.com/WalsGit/Add2WL-for-Invidious/issues
@@ -85,7 +85,7 @@
     let ChangeDefaultWLPLID = false;
 
     const protocol = window.location.protocol;
-    const IVinstance = protocol + "//" + window.location.hostname;
+    const IVinstance = protocol + "//" + window.location.host;
     const currentPageURL = window.location.href;
     const playlistsPageURL = IVinstance + "/feed/playlists";
 
